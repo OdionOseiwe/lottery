@@ -1,5 +1,6 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
 
 /// a person comes to buy a ticket for the right price and the lottery have a set time
 /// and the owner comes to start the lottery and a random number is gotten at random to get
@@ -39,7 +40,7 @@ contract Lottery {
 
     function startLottery(uint32 _ticketPrice) external OnlyOwner {
         ticketPrice = _ticketPrice;
-        timePeriod = uint32(block.timestamp + 5 minutes);
+        timePeriod = uint32(block.timestamp + 2 minutes);
         start = true;
     }
 
@@ -73,7 +74,7 @@ contract Lottery {
     function announceWinner() external OnlyOwner {
         require(block.timestamp >= timePeriod, "not finished");
         require(start == true, "neva started");
-        if (finish != true) {
+        if (finish == true) {
             revert finished();
         }
         uint index = winnerNumber();
